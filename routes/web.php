@@ -14,3 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'welcome')->name('home');
+
+Route::get('/login', App\Http\Livewire\Login::class)->name('login');
+Route::get('/settings', App\Http\Livewire\Settings::class)->name('settings')->middleware('auth');

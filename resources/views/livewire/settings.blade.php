@@ -1,4 +1,5 @@
-<div>
+<div class="flex items-center justify-center w-full h-screen">
+<div class="w-1/2 p-4 border border-gray-200">
     <div class="mb-4">
         @if (session()->has('message'))
             <div class="p-2 text-white bg-green-600 rounded-lg">
@@ -182,4 +183,5 @@
             {{ __('Submit') }}
         </button>
     </form>
+</div>
 </div>
