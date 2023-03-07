@@ -1,6 +1,10 @@
 @extends('layouts.app')
 <div
-    class="h-full flex justify-center items-center"
+    class="h-full flex justify-center"
 >
-    <livewire:counter />
+    <div class="w-full m-20">
+        <div class="mt-10">
+            <livewire:settings />
+        </div>
+    </div>
 </div>
