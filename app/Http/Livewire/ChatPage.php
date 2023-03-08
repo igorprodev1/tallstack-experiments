@@ -10,25 +10,27 @@ class ChatPage extends Component
 {
     public $message;
     public $messages;
-
+    
+    protected $listeners = ['echo:private-chat,MessageSent' => 'handleNewMessage'];
 
     public function mount()
     {
-        $this->messages = Message::query()->with('user')->get();
+        $this->messages = Message::query()
+            ->with('user')
+            ->get(['message', 'created_at'])
+            ->toArray();
     }
     public function send()
     {
         auth()->check();
-        // dd(Message::query()->with('user')->get()->toArray());
         $validator = validator(
             ['message' => $this->message ],
             ['message' => ['required', 'string']],
         );
         $validated = $validator->validated();
-        // dd($validated);
-        auth()->user()->message()->create($validated);
-
-        broadcast(new MessageSent(auth()->user(), $this->message));
+        $message = auth()->user()->message()->create($validated);
+        
+        event(new MessageSent(auth()->user(), $message));
         
         $this->message = '';
     }
@@ -36,5 +38,10 @@ class ChatPage extends Component
     public function render()
     {
         return view('livewire.chat-page');
+    }
+
+    public function handleNewMessage($event)
+    {
+        array_push($this->messages, $event['message']);
     }
 }

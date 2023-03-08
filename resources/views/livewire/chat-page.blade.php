@@ -4,7 +4,7 @@
     >
         @foreach ($messages as $message)
         <div>
-            {{ $message->message }}
+            {{ $message['message'] }}
         </div>
         @endforeach
     </div>
