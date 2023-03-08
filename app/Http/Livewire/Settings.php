@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\UserSettings;
-use Illuminate\Support\Facades\Auth;
 
 class Settings extends Component
 {
@@ -29,7 +28,7 @@ class Settings extends Component
     ];
 
     public function mount() {
-        $settings = UserSettings::query()->where('user_id', Auth::id())->first();
+        $settings = UserSettings::query()->where('user_id', auth()->id())->first();
         
         if(is_null($settings)) {
             return;
@@ -47,10 +46,9 @@ class Settings extends Component
 
     public function submit() {
         $validatedData = $this->validate();
-        $validatedData['user_id'] = Auth::id();
+        $validatedData['user_id'] = auth()->id();
         UserSettings::query()->updateOrCreate($validatedData);
-        // dd($validatedData);
-        session()->flash('message', 'Post successfully updated.');
+        session()->flash('message', __('Settings successfully updated.'));
     }
 
     public function render()

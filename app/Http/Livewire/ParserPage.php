@@ -10,7 +10,6 @@ class ParserPage extends Component
     public function putInQueue()
     {
         dispatch(new ParserJob(['date' => now()->format('H:m:s')]));
-        // dd(['put in']);
     }
 
     public function render()
